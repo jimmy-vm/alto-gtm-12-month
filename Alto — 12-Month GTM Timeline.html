@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)file:///Users/formulam1/Downloads/alto-gtm-timeline_3.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alto — 12-Month GTM Timeline</title>
+<link href="./Alto — 12-Month GTM Timeline_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --mint: #A8E6CF;
+    --forsythia: #FFD93D;
+    --saffron: #FF8C42;
+    --nocturnal: #0A1628;
+    --card-bg: rgba(255,255,255,0.04);
+    --glass: rgba(255,255,255,0.06);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--nocturnal);
+    color: #E8EDF3;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .bg-grid {
+    position: fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(168,230,207,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,230,207,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero {
+    position: relative; z-index:1;
+    padding: 56px 40px 24px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--mint);
+    border: 1px solid rgba(168,230,207,0.25);
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700; color: #fff;
+    line-height: 1.15; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--mint); }
+
+  .hero p {
+    font-size: 14.5px; color: #8899AA;
+    max-width: 620px; margin: 0 auto;
+  }
+
+  .metrics-strip {
+    position: relative; z-index:1;
+    display: flex; justify-content: center; gap: 32px;
+    padding: 20px 40px 28px;
+    flex-wrap: wrap;
+  }
+
+  .metric-card {
+    text-align: center;
+    padding: 14px 22px;
+    background: var(--glass);
+    border: 1px solid rgba(168,230,207,0.1);
+    border-radius: 12px;
+    min-width: 130px;
+  }
+
+  .metric-card .num { font-size: 24px; font-weight: 700; }
+  .metric-card .label {
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #6B7F95; margin-top: 3px;
+  }
+
+  .scroll-hint {
+    position: relative; z-index:1;
+    text-align: center;
+    padding: 0 40px 10px;
+    font-size: 11px; color: #4A5568;
+  }
+  .scroll-hint span {
+    display: inline-block;
+    animation: bx 2s ease-in-out infinite;
+  }
+  @keyframes bx { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
+
+  .timeline-wrap {
+    position: relative; z-index:1;
+    padding: 0 40px 40px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .timeline-inner { width: 2640px; }
+
+  /* Phase bar */
+  .phase-bar {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+    width: 100%;
+  }
+
+  .phase-block {
+    text-align: center;
+    padding: 9px 6px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2.2px; text-transform: uppercase;
+    border-radius: 8px;
+  }
+
+  .pb-build {
+    grid-column: 1 / 5;
+    background: rgba(168,230,207,0.08); color: var(--mint);
+    border: 1px solid rgba(168,230,207,0.15);
+  }
+  .pb-launch {
+    grid-column: 5 / 6;
+    background: rgba(255,217,61,0.08); color: var(--forsythia);
+    border: 1px solid rgba(255,217,61,0.15);
+  }
+  .pb-revenue {
+    grid-column: 6 / 11;
+    background: rgba(255,140,66,0.08); color: var(--saffron);
+    border: 1px solid rgba(255,140,66,0.15);
+  }
+  .pb-growth {
+    grid-column: 11 / 13;
+    background: rgba(126,184,255,0.08); color: #7EB8FF;
+    border: 1px solid rgba(126,184,255,0.15);
+  }
+
+  /* Main grid */
+  .tl-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows:
+      auto   /* 1 header */
+      auto   /* 2 mrr bar */
+      48px   /* 3 kpi chips */
+      1fr    /* 4 goal */
+      1fr    /* 5 product */
+      1fr    /* 6 marketing */
+      48px   /* 7 unit econ */
+      auto;  /* 8 milestone */
+    gap: 6px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .month-hdr {
+    padding: 12px 8px 10px;
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .month-hdr .mn { font-size: 14px; font-weight: 600; color:#fff; }
+  .month-hdr .ms { font-size: 10px; color:#6B7F95; letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+  .rev-wrap {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 10px 10px 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .rev-track {
+    height: 6px; background: rgba(255,255,255,0.06);
+    border-radius: 100px; overflow: hidden; margin-bottom: 6px;
+  }
+  .rev-fill { height:100%; border-radius:100px; }
+  .rev-nums { display:flex; justify-content:space-between; font-size:10px; }
+  .rev-nums .mrr { font-weight:600; }
+  .rev-nums .users { color:#6B7F95; }
+
+  .kpi-row { display: flex; gap: 4px; }
+  .kpi-chip {
+    flex:1;
+    background: rgba(192,132,252,0.05);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 8px;
+    padding: 6px 4px;
+    text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .kpi-chip .kv { font-size:13px; font-weight:700; color:#C084FC; }
+  .kpi-chip .kl { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:#8B7AA8; margin-top:1px; }
+  .kpi-empty { border: 1px dashed rgba(255,255,255,0.04); border-radius: 8px; }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 11px 11px 12px;
+    display: flex; flex-direction: column;
+  }
+  .info-card .cl {
+    font-size: 9px; letter-spacing:1.5px; text-transform:uppercase;
+    font-weight:600; margin-bottom:5px;
+    display:flex; align-items:center; gap:5px;
+  }
+  .cl .dot { width:6px; height:6px; border-radius:50%; display:inline-block; }
+  .dot-goal { background: var(--forsythia); }
+  .dot-prod { background: var(--mint); }
+  .dot-mktg { background: var(--saffron); }
+  .info-card .ct { font-size: 11.5px; line-height:1.55; color:#B0BEC5; flex:1; }
+
+  .ue-row { display:flex; gap:4px; }
+  .ue-chip {
+    flex:1;
+    background: rgba(168,230,207,0.04);
+    border: 1px solid rgba(168,230,207,0.08);
+    border-radius:8px; padding:6px 4px;
+    text-align:center;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .ue-chip .uv { font-size:13px; font-weight:700; color:var(--mint); }
+  .ue-chip .ul { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:#6B9A84; margin-top:1px; }
+  .ue-empty { border: 1px dashed rgba(255,255,255,0.04); border-radius:8px; }
+
+  /* Milestone — left-aligned, same style as info cards */
+  .ms-card {
+    background: rgba(0,32,96,0.2);
+    border: 1px solid rgba(126,184,255,0.1);
+    border-radius: 10px;
+    padding: 11px 11px 12px;
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .ms-card .cl {
+    font-size: 9px; letter-spacing:1.5px; text-transform:uppercase;
+    font-weight:600; margin-bottom:5px;
+    display:flex; align-items:center; gap:5px;
+    color: #7EB8FF;
+  }
+  .ms-card .mt {
+    font-size: 11.5px; line-height:1.55; color: #7EB8FF; font-weight: 500;
+  }
+
+  .footer {
+    position:relative; z-index:1;
+    text-align:center;
+    padding: 16px 40px 40px;
+    font-size:11px; color:#4A5568; letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="hero">
+  <div class="hero-badge">Alto — Confidential</div>
+  <h1>12-Month <span>Go-to-Market</span> Timeline</h1>
+  <p>How Alto acquires, converts, and retains paying music learners — month by month from seed close through first growth phase.</p>
+</div>
+
+<div class="metrics-strip">
+  <div class="metric-card"><div class="num" style="color:var(--mint)">235</div><div class="label">Paying Learners</div></div>
+  <div class="metric-card"><div class="num" style="color:var(--forsythia)">$11.6K</div><div class="label">Monthly Revenue</div></div>
+  <div class="metric-card"><div class="num" style="color:var(--saffron)">73</div><div class="label">Artists</div></div>
+  <div class="metric-card"><div class="num" style="color:#7EB8FF">5.9x</div><div class="label">LTV : CAC</div></div>
+  <div class="metric-card"><div class="num" style="color:#C084FC">52%</div><div class="label">Gross Margin</div></div>
+  <div class="metric-card"><div class="num" style="color:#fff">$139K</div><div class="label">Implied ARR</div></div>
+</div>
+
+<div class="scroll-hint"><span>← Scroll horizontally to explore all 12 months →</span></div>
+
+<div class="timeline-wrap">
+<div class="timeline-inner">
+
+  <div class="phase-bar">
+    <div class="phase-block pb-build">Build &amp; Test</div>
+    <div class="phase-block pb-launch">Launch</div>
+    <div class="phase-block pb-revenue">Early Revenue</div>
+    <div class="phase-block pb-growth">Growth</div>
+  </div>
+
+  <div class="tl-grid" id="tl"><div class="month-hdr" style="grid-area: 1 / 1;"><div class="mn">Mar '26</div><div class="ms">Month 1</div></div><div class="rev-wrap" style="grid-area: 2 / 1;"><div class="rev-track"><div class="rev-fill" style="width:0%;background:linear-gradient(90deg,#A8E6CF,#6FCF97)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#A8E6CF">—</span>
+       <span class="users">Pre-rev</span>
+     </div></div><div class="kpi-empty" style="grid-area: 3 / 1;"></div><div class="info-card" style="grid-area: 4 / 1;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Close seed round. Finalize term sheet.</div></div><div class="info-card" style="grid-area: 5 / 1;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Finalize Flow engine spec. Course templates ready. Begin dev sprint.</div></div><div class="info-card" style="grid-area: 6 / 1;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Landing page live with waitlist.</div></div><div class="ue-empty" style="grid-area: 7 / 1;"></div><div class="ms-card" style="grid-area: 8 / 1;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">End of Mar funding committed</div></div><div class="month-hdr" style="grid-area: 1 / 2;"><div class="mn">Apr '26</div><div class="ms">Month 2</div></div><div class="rev-wrap" style="grid-area: 2 / 2;"><div class="rev-track"><div class="rev-fill" style="width:0%;background:linear-gradient(90deg,#A8E6CF,#6FCF97)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#A8E6CF">—</span>
+       <span class="users">Pre-rev</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 2;"><div class="kpi-chip"><div class="kv">50</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 2;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Wire funds. Hire eng lead + first 2 devs.</div></div><div class="info-card" style="grid-area: 5 / 2;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">3 launch courses recorded. Free trial flow in staging.</div></div><div class="info-card" style="grid-area: 6 / 2;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Waitlist page with free course teaser. Record podcast ep 1–2.</div></div><div class="ue-empty" style="grid-area: 7 / 2;"></div><div class="ms-card" style="grid-area: 8 / 2;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">Dev team active; analytics live</div></div><div class="month-hdr" style="grid-area: 1 / 3;"><div class="mn">May '26</div><div class="ms">Month 3</div></div><div class="rev-wrap" style="grid-area: 2 / 3;"><div class="rev-track"><div class="rev-fill" style="width:0%;background:linear-gradient(90deg,#A8E6CF,#6FCF97)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#A8E6CF">—</span>
+       <span class="users">Pre-rev</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 3;"><div class="kpi-chip"><div class="kv">200</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 3;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">500+ waitlist. First 2 podcast episodes live.</div></div><div class="info-card" style="grid-area: 5 / 3;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Hannes, Marco, Neil — 3 courses ready each. Artist onboarding doc finalized.</div></div><div class="info-card" style="grid-area: 6 / 3;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Email 200+ waitlist. Social countdown to launch. PR list built (20 outlets).</div></div><div class="ue-empty" style="grid-area: 7 / 3;"></div><div class="ms-card" style="grid-area: 8 / 3;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">Pre-launch list &gt; 500</div></div><div class="month-hdr" style="grid-area: 1 / 4;"><div class="mn">Jun '26</div><div class="ms">Month 4</div></div><div class="rev-wrap" style="grid-area: 2 / 4;"><div class="rev-track"><div class="rev-fill" style="width:0%;background:linear-gradient(90deg,#A8E6CF,#6FCF97)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#A8E6CF">—</span>
+       <span class="users">Pre-rev</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 4;"><div class="kpi-chip"><div class="kv">500</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 4;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Flow closed beta with 20 testers. First courses recording.</div></div><div class="info-card" style="grid-area: 5 / 4;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Onboarding v2 (guided first session). 8 courses total. Community AMA feature.</div></div><div class="info-card" style="grid-area: 6 / 4;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Podcast ep 3–4. Artist spotlight reels. 500+ waitlist. 3 posts/week.</div></div><div class="ue-empty" style="grid-area: 7 / 4;"></div><div class="ms-card" style="grid-area: 8 / 4;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">First trial signups</div></div><div class="month-hdr" style="grid-area: 1 / 5;"><div class="mn">Jul '26</div><div class="ms">Month 5</div></div><div class="rev-wrap" style="grid-area: 2 / 5;"><div class="rev-track"><div class="rev-fill" style="width:5%;background:linear-gradient(90deg,#FFD93D,#F0C000)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FFD93D">$392</span>
+       <span class="users">8 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 5;"><div class="kpi-chip"><div class="kv">16</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">2</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">750</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 5;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Flow public launch. Payments live. First paying cohort.</div></div><div class="info-card" style="grid-area: 5 / 5;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Flow public launch with Stripe payments. Learner profiles. 8 courses + free trial.</div></div><div class="info-card" style="grid-area: 6 / 5;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Launch email to full waitlist. Social blitz: 5 posts/week across IG, TikTok, X.</div></div><div class="ue-row" style="grid-area: 7 / 5;"><div class="ue-chip"><div class="uv">$635</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 5;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">Marketplace LIVE</div></div><div class="month-hdr" style="grid-area: 1 / 6;"><div class="mn">Aug '26</div><div class="ms">Month 6</div></div><div class="rev-wrap" style="grid-area: 2 / 6;"><div class="rev-track"><div class="rev-fill" style="width:8.404950154692333%;background:linear-gradient(90deg,#FF8C42,#FF6B35)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FF8C42">$978</span>
+       <span class="users">20 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 6;"><div class="kpi-chip"><div class="kv">28</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">5</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">950</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 6;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">First complete artist earnings cycle. 20 paying learners.</div></div><div class="info-card" style="grid-area: 5 / 6;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Push notifications for streaks. Trial reminder emails (day 3/5/7).</div></div><div class="info-card" style="grid-area: 6 / 6;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Weekly podcast. 3 reels/week from artist sessions. First learner testimonial.</div></div><div class="ue-row" style="grid-area: 7 / 6;"><div class="ue-chip"><div class="uv">2.9x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$330</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 6;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">20 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 7;"><div class="mn">Sep '26</div><div class="ms">Month 7</div></div><div class="rev-wrap" style="grid-area: 2 / 7;"><div class="rev-track"><div class="rev-fill" style="width:15.873152286008937%;background:linear-gradient(90deg,#FF8C42,#FF6B35)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FF8C42">$1,847</span>
+       <span class="users">38 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 7;"><div class="kpi-chip"><div class="kv">50</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">10</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">1.2K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 7;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Prove podcast-to-trial funnel. NPS &gt; 40.</div></div><div class="info-card" style="grid-area: 5 / 7;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Survey at session 5. Churn win-back emails. Monthly challenges.</div></div><div class="info-card" style="grid-area: 6 / 7;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">"30-day beat challenge". Podcast SEO: transcripts + show notes.</div></div><div class="ue-row" style="grid-area: 7 / 7;"><div class="ue-chip"><div class="uv">3.7x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$127</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 7;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">38 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 8;"><div class="mn">Oct '26</div><div class="ms">Month 8</div></div><div class="rev-wrap" style="grid-area: 2 / 8;"><div class="rev-track"><div class="rev-fill" style="width:26.057064283258853%;background:linear-gradient(90deg,#FF8C42,#FF6B35)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FF8C42">$3,032</span>
+       <span class="users">62 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 8;"><div class="kpi-chip"><div class="kv">90</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">18</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">1.5K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 8;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">10+ courses live. First Builder-tier upgrades.</div></div><div class="info-card" style="grid-area: 5 / 8;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">10+ courses across 3 genres. Artist dashboard for uploads + earnings.</div></div><div class="info-card" style="grid-area: 6 / 8;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">YouTube: 2 videos/week. Cross-promo with artist channels.</div></div><div class="ue-row" style="grid-area: 7 / 8;"><div class="ue-chip"><div class="uv">3.9x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$71</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 8;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">62 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 9;"><div class="mn">Nov '26</div><div class="ms">Month 9</div></div><div class="rev-wrap" style="grid-area: 2 / 9;"><div class="rev-track"><div class="rev-fill" style="width:38.78480577518047%;background:linear-gradient(90deg,#FF8C42,#FF6B35)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FF8C42">$4,513</span>
+       <span class="users">92 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 9;"><div class="kpi-chip"><div class="kv">140</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">28</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">1.9K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 9;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Referral program beta live. Retargeting pixels set.</div></div><div class="info-card" style="grid-area: 5 / 9;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Automated email drip: trial → Explorer → Builder upsell. Referral beta testing.</div></div><div class="info-card" style="grid-area: 6 / 9;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Retargeting pixels on all pages. Email drip sequences live. UTMs on everything.</div></div><div class="ue-row" style="grid-area: 7 / 9;"><div class="ue-chip"><div class="uv">4.0x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$45</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 9;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">92 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 10;"><div class="mn">Dec '26</div><div class="ms">Month 10</div></div><div class="rev-wrap" style="grid-area: 2 / 10;"><div class="rev-track"><div class="rev-fill" style="width:55.09625300790649%;background:linear-gradient(90deg,#FF8C42,#FF6B35)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#FF8C42">$6,411</span>
+       <span class="users">130 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 10;"><div class="kpi-chip"><div class="kv">200</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">40</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">2.4K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 10;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Holiday push. Build retargeting audiences for Jan paid launch.</div></div><div class="info-card" style="grid-area: 5 / 10;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">3 holiday courses. Gift subscription feature. Year-in-review for learners.</div></div><div class="info-card" style="grid-area: 6 / 10;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">"New Year, New Sound" promo. Gift card push (End Nov–NYE). Holiday artist content.</div></div><div class="ue-row" style="grid-area: 7 / 10;"><div class="ue-chip"><div class="uv">3.6x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$38</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 10;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">130 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 11;"><div class="mn">Jan '27</div><div class="ms">Month 11</div></div><div class="rev-wrap" style="grid-area: 2 / 11;"><div class="rev-track"><div class="rev-fill" style="width:74.51014094190444%;background:linear-gradient(90deg,#7EB8FF,#4A90D9)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#7EB8FF">$8,670</span>
+       <span class="users">175 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 11;"><div class="kpi-chip"><div class="kv">234</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">60</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">3.1K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 11;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Launch paid ads with 6 months of conversion data.</div></div><div class="info-card" style="grid-area: 5 / 11;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Learner dashboard v2 (progress, skill trees, history). Ad landing pages A/B tested.</div></div><div class="info-card" style="grid-area: 6 / 11;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">Paid ads launch: $3.2K/mo Meta + TikTok. Lookalike audiences.</div></div><div class="ue-row" style="grid-area: 7 / 11;"><div class="ue-chip"><div class="uv">4.5x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$27</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 11;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">175 paying learners</div></div><div class="month-hdr" style="grid-area: 1 / 12;"><div class="mn">Feb '27</div><div class="ms">Month 12</div></div><div class="rev-wrap" style="grid-area: 2 / 12;"><div class="rev-track"><div class="rev-fill" style="width:100%;background:linear-gradient(90deg,#7EB8FF,#4A90D9)"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:#7EB8FF">$11,636</span>
+       <span class="users">235 paid</span>
+     </div></div><div class="kpi-row" style="grid-area: 3 / 12;"><div class="kpi-chip"><div class="kv">308</div><div class="kl">Leads</div></div><div class="kpi-chip"><div class="kv">73</div><div class="kl">Artists</div></div><div class="kpi-chip"><div class="kv">3.9K</div><div class="kl">Waitlist</div></div></div><div class="info-card" style="grid-area: 4 / 12;"><div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">Cut underperforming channels. Double budget on winners.</div></div><div class="info-card" style="grid-area: 5 / 12;"><div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">Pricing page A/B test. In-app upsell prompt at course 3 completion.</div></div><div class="info-card" style="grid-area: 6 / 12;"><div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">A/B test 3 landing pages. Cut worst. 2× spend on winner. CPL target: &lt;$20.</div></div><div class="ue-row" style="grid-area: 7 / 12;"><div class="ue-chip"><div class="uv">5.9x</div><div class="ul">LTV:CAC</div></div><div class="ue-chip"><div class="uv">$21</div><div class="ul">CPL</div></div></div><div class="ms-card" style="grid-area: 8 / 12;"><div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">235 paying learners</div></div></div>
+
+</div>
+</div>
+
+<div class="footer">ALTO &nbsp;·&nbsp; alto.vision &nbsp;·&nbsp; 12-Month Plan: March 2026 — February 2027 &nbsp;·&nbsp; Confidential</div>
+
+<script>
+const D = [
+  {
+    mn:"Mar '26", ms:"Month 1", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:0, leads:0,
+    goal:"Close seed round. Finalize term sheet.",
+    prod:"Finalize Flow engine spec. Course templates ready. Begin dev sprint.",
+    mktg:"Landing page live with waitlist.",
+    mile:"End of Mar funding committed",
+    ltv:"—", cpl:"—"
+  },
+  {
+    mn:"Apr '26", ms:"Month 2", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:50, leads:0,
+    goal:"Wire funds. Hire eng lead + first 2 devs.",
+    prod:"3 launch courses recorded. Free trial flow in staging.",
+    mktg:"Waitlist page with free course teaser. Record podcast ep 1–2.",
+    mile:"Dev team active; analytics live",
+    ltv:"—", cpl:"—"
+  },
+  {
+    mn:"May '26", ms:"Month 3", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:200, leads:0,
+    goal:"500+ waitlist. First 2 podcast episodes live.",
+    prod:"Hannes, Marco, Neil — 3 courses ready each. Artist onboarding doc finalized.",
+    mktg:"Email 200+ waitlist. Social countdown to launch. PR list built (20 outlets).",
+    mile:"Pre-launch list > 500",
+    ltv:"—", cpl:"—"
+  },
+  {
+    mn:"Jun '26", ms:"Month 4", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:500, leads:0,
+    goal:"Flow closed beta with 20 testers. First courses recording.",
+    prod:"Onboarding v2 (guided first session). 8 courses total. Community AMA feature.",
+    mktg:"Podcast ep 3–4. Artist spotlight reels. 500+ waitlist. 3 posts/week.",
+    mile:"First trial signups",
+    ltv:"—", cpl:"—"
+  },
+  {
+    mn:"Jul '26", ms:"Month 5", phase:"launch",
+    mrr:392, users:8, artists:2, waitlist:750, leads:16,
+    goal:"Flow public launch. Payments live. First paying cohort.",
+    prod:"Flow public launch with Stripe payments. Learner profiles. 8 courses + free trial.",
+    mktg:"Launch email to full waitlist. Social blitz: 5 posts/week across IG, TikTok, X.",
+    mile:"Marketplace LIVE",
+    ltv:"—", cpl:"$635"
+  },
+  {
+    mn:"Aug '26", ms:"Month 6", phase:"revenue",
+    mrr:978, users:20, artists:5, waitlist:950, leads:28,
+    goal:"First complete artist earnings cycle. 20 paying learners.",
+    prod:"Push notifications for streaks. Trial reminder emails (day 3/5/7).",
+    mktg:"Weekly podcast. 3 reels/week from artist sessions. First learner testimonial.",
+    mile:"20 paying learners",
+    ltv:"2.9x", cpl:"$330"
+  },
+  {
+    mn:"Sep '26", ms:"Month 7", phase:"revenue",
+    mrr:1847, users:38, artists:10, waitlist:1200, leads:50,
+    goal:"Prove podcast-to-trial funnel. NPS > 40.",
+    prod:"Survey at session 5. Churn win-back emails. Monthly challenges.",
+    mktg:"\"30-day beat challenge\". Podcast SEO: transcripts + show notes.",
+    mile:"38 paying learners",
+    ltv:"3.7x", cpl:"$127"
+  },
+  {
+    mn:"Oct '26", ms:"Month 8", phase:"revenue",
+    mrr:3032, users:62, artists:18, waitlist:1500, leads:90,
+    goal:"10+ courses live. First Builder-tier upgrades.",
+    prod:"10+ courses across 3 genres. Artist dashboard for uploads + earnings.",
+    mktg:"YouTube: 2 videos/week. Cross-promo with artist channels.",
+    mile:"62 paying learners",
+    ltv:"3.9x", cpl:"$71"
+  },
+  {
+    mn:"Nov '26", ms:"Month 9", phase:"revenue",
+    mrr:4513, users:92, artists:28, waitlist:1900, leads:140,
+    goal:"Referral program beta live. Retargeting pixels set.",
+    prod:"Automated email drip: trial → Explorer → Builder upsell. Referral beta testing.",
+    mktg:"Retargeting pixels on all pages. Email drip sequences live. UTMs on everything.",
+    mile:"92 paying learners",
+    ltv:"4.0x", cpl:"$45"
+  },
+  {
+    mn:"Dec '26", ms:"Month 10", phase:"revenue",
+    mrr:6411, users:130, artists:40, waitlist:2400, leads:200,
+    goal:"Holiday push. Build retargeting audiences for Jan paid launch.",
+    prod:"3 holiday courses. Gift subscription feature. Year-in-review for learners.",
+    mktg:"\"New Year, New Sound\" promo. Gift card push (End Nov–NYE). Holiday artist content.",
+    mile:"130 paying learners",
+    ltv:"3.6x", cpl:"$38"
+  },
+  {
+    mn:"Jan '27", ms:"Month 11", phase:"growth",
+    mrr:8670, users:175, artists:60, waitlist:3100, leads:234,
+    goal:"Launch paid ads with 6 months of conversion data.",
+    prod:"Learner dashboard v2 (progress, skill trees, history). Ad landing pages A/B tested.",
+    mktg:"Paid ads launch: $3.2K/mo Meta + TikTok. Lookalike audiences.",
+    mile:"175 paying learners",
+    ltv:"4.5x", cpl:"$27"
+  },
+  {
+    mn:"Feb '27", ms:"Month 12", phase:"growth",
+    mrr:11636, users:235, artists:73, waitlist:3900, leads:308,
+    goal:"Cut underperforming channels. Double budget on winners.",
+    prod:"Pricing page A/B test. In-app upsell prompt at course 3 completion.",
+    mktg:"A/B test 3 landing pages. Cut worst. 2× spend on winner. CPL target: <$20.",
+    mile:"235 paying learners",
+    ltv:"5.9x", cpl:"$21"
+  }
+];
+
+const maxMRR = 11636;
+const phaseC = {
+  build:  { bar:'linear-gradient(90deg,#A8E6CF,#6FCF97)', accent:'#A8E6CF' },
+  launch: { bar:'linear-gradient(90deg,#FFD93D,#F0C000)', accent:'#FFD93D' },
+  revenue:{ bar:'linear-gradient(90deg,#FF8C42,#FF6B35)', accent:'#FF8C42' },
+  growth: { bar:'linear-gradient(90deg,#7EB8FF,#4A90D9)', accent:'#7EB8FF' }
+};
+
+const g = document.getElementById('tl');
+
+function el(tag, cls, styles, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (styles) e.style.cssText = styles;
+  if (html) e.innerHTML = html;
+  return e;
+}
+
+D.forEach((m, i) => {
+  const c = i + 1;
+  const pc = phaseC[m.phase];
+  const pct = m.mrr > 0 ? Math.max(5, (m.mrr / maxMRR) * 100) : 0;
+
+  // Row 1: Header
+  g.appendChild(el('div', 'month-hdr', `grid-column:${c};grid-row:1;`,
+    `<div class="mn">${m.mn}</div><div class="ms">${m.ms}</div>`));
+
+  // Row 2: MRR bar
+  g.appendChild(el('div', 'rev-wrap', `grid-column:${c};grid-row:2;`,
+    `<div class="rev-track"><div class="rev-fill" style="width:${pct}%;background:${pc.bar}"></div></div>
+     <div class="rev-nums">
+       <span class="mrr" style="color:${pc.accent}">${m.mrr > 0 ? '$'+m.mrr.toLocaleString() : '—'}</span>
+       <span class="users">${m.users > 0 ? m.users+' paid' : 'Pre-rev'}</span>
+     </div>`));
+
+  // Row 3: KPI chips
+  if (m.leads > 0 || m.waitlist > 0 || m.artists > 0) {
+    let chips = '';
+    if (m.leads > 0) chips += `<div class="kpi-chip"><div class="kv">${m.leads}</div><div class="kl">Leads</div></div>`;
+    if (m.artists > 0) chips += `<div class="kpi-chip"><div class="kv">${m.artists}</div><div class="kl">Artists</div></div>`;
+    if (m.waitlist > 0) chips += `<div class="kpi-chip"><div class="kv">${m.waitlist >= 1000 ? (m.waitlist/1000).toFixed(1)+'K' : m.waitlist}</div><div class="kl">Waitlist</div></div>`;
+    g.appendChild(el('div', 'kpi-row', `grid-column:${c};grid-row:3;`, chips));
+  } else {
+    g.appendChild(el('div', 'kpi-empty', `grid-column:${c};grid-row:3;`, ''));
+  }
+
+  // Row 4: Goal
+  g.appendChild(el('div', 'info-card', `grid-column:${c};grid-row:4;`,
+    `<div class="cl" style="color:var(--forsythia)"><span class="dot dot-goal"></span>GOAL</div><div class="ct">${m.goal}</div>`));
+
+  // Row 5: Product
+  g.appendChild(el('div', 'info-card', `grid-column:${c};grid-row:5;`,
+    `<div class="cl" style="color:var(--mint)"><span class="dot dot-prod"></span>PRODUCT</div><div class="ct">${m.prod}</div>`));
+
+  // Row 6: Marketing
+  g.appendChild(el('div', 'info-card', `grid-column:${c};grid-row:6;`,
+    `<div class="cl" style="color:var(--saffron)"><span class="dot dot-mktg"></span>MARKETING</div><div class="ct">${m.mktg}</div>`));
+
+  // Row 7: Unit economics
+  if (m.ltv !== '—' || m.cpl !== '—') {
+    let chips = '';
+    if (m.ltv !== '—') chips += `<div class="ue-chip"><div class="uv">${m.ltv}</div><div class="ul">LTV:CAC</div></div>`;
+    if (m.cpl !== '—') chips += `<div class="ue-chip"><div class="uv">${m.cpl}</div><div class="ul">CPL</div></div>`;
+    g.appendChild(el('div', 'ue-row', `grid-column:${c};grid-row:7;`, chips));
+  } else {
+    g.appendChild(el('div', 'ue-empty', `grid-column:${c};grid-row:7;`, ''));
+  }
+
+  // Row 8: Milestone — left-aligned, same font size as other cards
+  g.appendChild(el('div', 'ms-card', `grid-column:${c};grid-row:8;`,
+    `<div class="cl"><span class="dot" style="background:#7EB8FF"></span>MILESTONE</div><div class="mt">${m.mile}</div>`));
+});
+</script>
+
+
+
+</body></html>
