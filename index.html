@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alto — 12-Month GTM Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mint: #A8E6CF;
+    --forsythia: #FFD93D;
+    --saffron: #FF8C42;
+    --nocturnal: #0A1628;
+    --card-bg: rgba(255,255,255,0.04);
+    --glass: rgba(255,255,255,0.06);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--nocturnal);
+    color: #E8EDF3;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  .bg-grid {
+    position: fixed; inset:0; z-index:0;
+    background-image:
+      linear-gradient(rgba(168,230,207,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168,230,207,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero {
+    position: relative; z-index:1;
+    padding: 56px 40px 24px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--mint);
+    border: 1px solid rgba(168,230,207,0.25);
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 700; color: #fff;
+    line-height: 1.15; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--mint); }
+
+  .hero p {
+    font-size: 14.5px; color: #8899AA;
+    max-width: 620px; margin: 0 auto;
+  }
+
+  .metrics-strip {
+    position: relative; z-index:1;
+    display: flex; justify-content: center; gap: 32px;
+    padding: 20px 40px 28px;
+    flex-wrap: wrap;
+  }
+
+  .metric-card {
+    text-align: center;
+    padding: 14px 22px;
+    background: var(--glass);
+    border: 1px solid rgba(168,230,207,0.1);
+    border-radius: 12px;
+    min-width: 130px;
+  }
+
+  .metric-card .num { font-size: 24px; font-weight: 700; }
+  .metric-card .label {
+    font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: #6B7F95; margin-top: 3px;
+  }
+
+  .scroll-hint {
+    position: relative; z-index:1;
+    text-align: center;
+    padding: 0 40px 10px;
+    font-size: 11px; color: #4A5568;
+  }
+  .scroll-hint span {
+    display: inline-block;
+    animation: bx 2s ease-in-out infinite;
+  }
+  @keyframes bx { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
+
+  .timeline-wrap {
+    position: relative; z-index:1;
+    padding: 0 40px 40px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .timeline-inner { width: 2640px; }
+
+  .phase-bar {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+    width: 100%;
+  }
+
+  .phase-block {
+    text-align: center;
+    padding: 9px 6px;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2.2px; text-transform: uppercase;
+    border-radius: 8px;
+  }
+
+  .pb-build {
+    grid-column: 1 / 5;
+    background: rgba(168,230,207,0.08); color: var(--mint);
+    border: 1px solid rgba(168,230,207,0.15);
+  }
+  .pb-launch {
+    grid-column: 5 / 6;
+    background: rgba(255,217,61,0.08); color: var(--forsythia);
+    border: 1px solid rgba(255,217,61,0.15);
+  }
+  .pb-revenue {
+    grid-column: 6 / 11;
+    background: rgba(255,140,66,0.08); color: var(--saffron);
+    border: 1px solid rgba(255,140,66,0.15);
+  }
+  .pb-growth {
+    grid-column: 11 / 13;
+    background: rgba(126,184,255,0.08); color: #7EB8FF;
+    border: 1px solid rgba(126,184,255,0.15);
+  }
+
+  .tl-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows:
+      auto
+      auto
+      48px
+      1fr
+      1fr
+      1fr
+      48px
+      auto;
+    gap: 6px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .month-hdr {
+    padding: 12px 8px 10px;
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .month-hdr .mn { font-size: 14px; font-weight: 600; color:#fff; }
+  .month-hdr .ms { font-size: 10px; color:#6B7F95; letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+
+  .rev-wrap {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 10px 10px 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .rev-track {
+    height: 6px; background: rgba(255,255,255,0.06);
+    border-radius: 100px; overflow: hidden; margin-bottom: 6px;
+  }
+  .rev-fill { height:100%; border-radius:100px; }
+  .rev-nums { display:flex; justify-content:space-between; font-size:10px; }
+  .rev-nums .mrr { font-weight:600; }
+  .rev-nums .users { color:#6B7F95; }
+
+  .kpi-row { display: flex; gap: 4px; }
+  .kpi-chip {
+    flex:1;
+    background: rgba(192,132,252,0.05);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 8px;
+    padding: 6px 4px;
+    text-align: center;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .kpi-chip .kv { font-size:13px; font-weight:700; color:#C084FC; }
+  .kpi-chip .kl { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:#8B7AA8; margin-top:1px; }
+  .kpi-empty { border: 1px dashed rgba(255,255,255,0.04); border-radius: 8px; }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 11px 11px 12px;
+    display: flex; flex-direction: column;
+  }
+  .info-card .cl {
+    font-size: 9px; letter-spacing:1.5px; text-transform:uppercase;
+    font-weight:600; margin-bottom:5px;
+    display:flex; align-items:center; gap:5px;
+  }
+  .cl .dot { width:6px; height:6px; border-radius:50%; display:inline-block; }
+  .dot-goal { background: var(--forsythia); }
+  .dot-prod { background: var(--mint); }
+  .dot-mktg { background: var(--saffron); }
+  .info-card .ct { font-size: 11.5px; line-height:1.55; color:#B0BEC5; flex:1; }
+
+  .ue-row { display:flex; gap:4px; }
+  .ue-chip {
+    flex:1;
+    background: rgba(168,230,207,0.04);
+    border: 1px solid rgba(168,230,207,0.08);
+    border-radius:8px; padding:6px 4px;
+    text-align:center;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .ue-chip .uv { font-size:13px; font-weight:700; color:var(--mint); }
+  .ue-chip .ul { font-size:8px; letter-spacing:1px; text-transform:uppercase; color:#6B9A84; margin-top:1px; }
+  .ue-empty { border: 1px dashed rgba(255,255,255,0.04); border-radius:8px; }
+
+  .ms-card {
+    background: rgba(0,32,96,0.2);
+    border: 1px solid rgba(126,184,255,0.1);
+    border-radius: 10px;
+    padding: 11px 11px 12px;
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .ms-card .cl {
+    font-size: 9px; letter-spacing:1.5px; text-transform:uppercase;
+    font-weight:600; margin-bottom:5px;
+    display:flex; align-items:center; gap:5px;
+    color: #7EB8FF;
+  }
+  .ms-card .mt {
+    font-size: 11.5px; line-height:1.55; color: #7EB8FF; font-weight: 500;
+  }
+
+  .footer {
+    position:relative; z-index:1;
+    text-align:center;
+    padding: 16px 40px 40px;
+    font-size:11px; color:#4A5568; letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="hero">
+  <div class="hero-badge">Alto &#8212; Confidential</div>
+  <h1>12-Month <span>Go-to-Market</span> Timeline</h1>
+  <p>How Alto acquires, converts, and retains paying music learners &#8212; month by month from seed close through first growth phase.</p>
+</div>
+
+<div class="metrics-strip">
+  <div class="metric-card"><div class="num" style="color:#A8E6CF">235</div><div class="label">Paying Learners</div></div>
+  <div class="metric-card"><div class="num" style="color:#FFD93D">$11.6K</div><div class="label">Monthly Revenue</div></div>
+  <div class="metric-card"><div class="num" style="color:#FF8C42">73</div><div class="label">Artists</div></div>
+  <div class="metric-card"><div class="num" style="color:#7EB8FF">5.9x</div><div class="label">LTV : CAC</div></div>
+  <div class="metric-card"><div class="num" style="color:#C084FC">52%</div><div class="label">Gross Margin</div></div>
+  <div class="metric-card"><div class="num" style="color:#fff">$139K</div><div class="label">Implied ARR</div></div>
+</div>
+
+<div class="scroll-hint"><span>&#8592; Scroll horizontally to explore all 12 months &#8594;</span></div>
+
+<div class="timeline-wrap">
+<div class="timeline-inner">
+
+  <div class="phase-bar">
+    <div class="phase-block pb-build">Build &amp; Test</div>
+    <div class="phase-block pb-launch">Launch</div>
+    <div class="phase-block pb-revenue">Early Revenue</div>
+    <div class="phase-block pb-growth">Growth</div>
+  </div>
+
+  <div class="tl-grid" id="tl"></div>
+
+</div>
+</div>
+
+<div class="footer">ALTO &nbsp;&middot;&nbsp; alto.vision &nbsp;&middot;&nbsp; 12-Month Plan: March 2026 &#8212; February 2027 &nbsp;&middot;&nbsp; Confidential</div>
+
+<script>
+var D = [
+  {
+    mn:"Mar '26", ms:"Month 1", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:0, leads:0,
+    goal:"Close seed round. Finalize term sheet.",
+    prod:"Finalize Flow engine spec. Course templates ready. Begin dev sprint.",
+    mktg:"Landing page live with waitlist.",
+    mile:"End of Mar funding committed",
+    ltv:"-", cpl:"-"
+  },
+  {
+    mn:"Apr '26", ms:"Month 2", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:50, leads:0,
+    goal:"Wire funds. Hire eng lead + first 2 devs.",
+    prod:"3 launch courses recorded. Free trial flow in staging.",
+    mktg:"Waitlist page with free course teaser. Record podcast ep 1-2.",
+    mile:"Dev team active; analytics live",
+    ltv:"-", cpl:"-"
+  },
+  {
+    mn:"May '26", ms:"Month 3", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:200, leads:0,
+    goal:"500+ waitlist. First 2 podcast episodes live.",
+    prod:"Hannes, Marco, Neil - 3 courses ready each. Artist onboarding doc finalized.",
+    mktg:"Email 200+ waitlist. Social countdown to launch. PR list built (20 outlets).",
+    mile:"Pre-launch list > 500",
+    ltv:"-", cpl:"-"
+  },
+  {
+    mn:"Jun '26", ms:"Month 4", phase:"build",
+    mrr:0, users:0, artists:0, waitlist:500, leads:0,
+    goal:"Flow closed beta with 20 testers. First courses recording.",
+    prod:"Onboarding v2 (guided first session). 8 courses total. Community AMA feature.",
+    mktg:"Podcast ep 3-4. Artist spotlight reels. 500+ waitlist. 3 posts/week.",
+    mile:"First trial signups",
+    ltv:"-", cpl:"-"
+  },
+  {
+    mn:"Jul '26", ms:"Month 5", phase:"launch",
+    mrr:392, users:8, artists:2, waitlist:750, leads:16,
+    goal:"Flow public launch. Payments live. First paying cohort.",
+    prod:"Flow public launch with Stripe payments. Learner profiles. 8 courses + free trial.",
+    mktg:"Launch email to full waitlist. Social blitz: 5 posts/week across IG, TikTok, X.",
+    mile:"Marketplace LIVE",
+    ltv:"-", cpl:"$635"
+  },
+  {
+    mn:"Aug '26", ms:"Month 6", phase:"revenue",
+    mrr:978, users:20, artists:5, waitlist:950, leads:28,
+    goal:"First complete artist earnings cycle. 20 paying learners.",
+    prod:"Push notifications for streaks. Trial reminder emails (day 3/5/7).",
+    mktg:"Weekly podcast. 3 reels/week from artist sessions. First learner testimonial.",
+    mile:"20 paying learners",
+    ltv:"2.9x", cpl:"$330"
+  },
+  {
+    mn:"Sep '26", ms:"Month 7", phase:"revenue",
+    mrr:1847, users:38, artists:10, waitlist:1200, leads:50,
+    goal:"Prove podcast-to-trial funnel. NPS > 40.",
+    prod:"Survey at session 5. Churn win-back emails. Monthly challenges.",
+    mktg:"30-day beat challenge. Podcast SEO: transcripts + show notes.",
+    mile:"38 paying learners",
+    ltv:"3.7x", cpl:"$127"
+  },
+  {
+    mn:"Oct '26", ms:"Month 8", phase:"revenue",
+    mrr:3032, users:62, artists:18, waitlist:1500, leads:90,
+    goal:"10+ courses live. First Builder-tier upgrades.",
+    prod:"10+ courses across 3 genres. Artist dashboard for uploads + earnings.",
+    mktg:"YouTube: 2 videos/week. Cross-promo with artist channels.",
+    mile:"62 paying learners",
+    ltv:"3.9x", cpl:"$71"
+  },
+  {
+    mn:"Nov '26", ms:"Month 9", phase:"revenue",
+    mrr:4513, users:92, artists:28, waitlist:1900, leads:140,
+    goal:"Referral program beta live. Retargeting pixels set.",
+    prod:"Automated email drip: trial to Explorer to Builder upsell. Referral beta testing.",
+    mktg:"Retargeting pixels on all pages. Email drip sequences live. UTMs on everything.",
+    mile:"92 paying learners",
+    ltv:"4.0x", cpl:"$45"
+  },
+  {
+    mn:"Dec '26", ms:"Month 10", phase:"revenue",
+    mrr:6411, users:130, artists:40, waitlist:2400, leads:200,
+    goal:"Holiday push. Build retargeting audiences for Jan paid launch.",
+    prod:"3 holiday courses. Gift subscription feature. Year-in-review for learners.",
+    mktg:"New Year, New Sound promo. Gift card push (End Nov-NYE). Holiday artist content.",
+    mile:"130 paying learners",
+    ltv:"3.6x", cpl:"$38"
+  },
+  {
+    mn:"Jan '27", ms:"Month 11", phase:"growth",
+    mrr:8670, users:175, artists:60, waitlist:3100, leads:234,
+    goal:"Launch paid ads with 6 months of conversion data.",
+    prod:"Learner dashboard v2 (progress, skill trees, history). Ad landing pages A/B tested.",
+    mktg:"Paid ads launch: $3.2K/mo Meta + TikTok. Lookalike audiences.",
+    mile:"175 paying learners",
+    ltv:"4.5x", cpl:"$27"
+  },
+  {
+    mn:"Feb '27", ms:"Month 12", phase:"growth",
+    mrr:11636, users:235, artists:73, waitlist:3900, leads:308,
+    goal:"Cut underperforming channels. Double budget on winners.",
+    prod:"Pricing page A/B test. In-app upsell prompt at course 3 completion.",
+    mktg:"A/B test 3 landing pages. Cut worst. 2x spend on winner. CPL target: under $20.",
+    mile:"235 paying learners",
+    ltv:"5.9x", cpl:"$21"
+  }
+];
+
+var maxMRR = 11636;
+var phaseC = {
+  build:  { bar:"linear-gradient(90deg,#A8E6CF,#6FCF97)", accent:"#A8E6CF" },
+  launch: { bar:"linear-gradient(90deg,#FFD93D,#F0C000)", accent:"#FFD93D" },
+  revenue:{ bar:"linear-gradient(90deg,#FF8C42,#FF6B35)", accent:"#FF8C42" },
+  growth: { bar:"linear-gradient(90deg,#7EB8FF,#4A90D9)", accent:"#7EB8FF" }
+};
+
+var g = document.getElementById("tl");
+
+function el(tag, cls, styles, html) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (styles) e.style.cssText = styles;
+  if (html) e.innerHTML = html;
+  return e;
+}
+
+for (var i = 0; i < D.length; i++) {
+  var m = D[i];
+  var c = i + 1;
+  var pc = phaseC[m.phase];
+  var pct = m.mrr > 0 ? Math.max(5, (m.mrr / maxMRR) * 100) : 0;
+
+  g.appendChild(el("div", "month-hdr", "grid-column:"+c+";grid-row:1;",
+    "<div class='mn'>"+m.mn+"</div><div class='ms'>"+m.ms+"</div>"));
+
+  g.appendChild(el("div", "rev-wrap", "grid-column:"+c+";grid-row:2;",
+    "<div class='rev-track'><div class='rev-fill' style='width:"+pct+"%;background:"+pc.bar+"'></div></div>"+
+    "<div class='rev-nums'>"+
+    "<span class='mrr' style='color:"+pc.accent+"'>"+(m.mrr > 0 ? "$"+m.mrr.toLocaleString() : "---")+"</span>"+
+    "<span class='users'>"+(m.users > 0 ? m.users+" paid" : "Pre-rev")+"</span>"+
+    "</div>"));
+
+  if (m.leads > 0 || m.waitlist > 0 || m.artists > 0) {
+    var chips = "";
+    if (m.leads > 0) chips += "<div class='kpi-chip'><div class='kv'>"+m.leads+"</div><div class='kl'>Leads</div></div>";
+    if (m.artists > 0) chips += "<div class='kpi-chip'><div class='kv'>"+m.artists+"</div><div class='kl'>Artists</div></div>";
+    if (m.waitlist > 0) chips += "<div class='kpi-chip'><div class='kv'>"+(m.waitlist >= 1000 ? (m.waitlist/1000).toFixed(1)+"K" : m.waitlist)+"</div><div class='kl'>Waitlist</div></div>";
+    g.appendChild(el("div", "kpi-row", "grid-column:"+c+";grid-row:3;", chips));
+  } else {
+    g.appendChild(el("div", "kpi-empty", "grid-column:"+c+";grid-row:3;", ""));
+  }
+
+  g.appendChild(el("div", "info-card", "grid-column:"+c+";grid-row:4;",
+    "<div class='cl' style='color:#FFD93D'><span class='dot dot-goal'></span>GOAL</div><div class='ct'>"+m.goal+"</div>"));
+
+  g.appendChild(el("div", "info-card", "grid-column:"+c+";grid-row:5;",
+    "<div class='cl' style='color:#A8E6CF'><span class='dot dot-prod'></span>PRODUCT</div><div class='ct'>"+m.prod+"</div>"));
+
+  g.appendChild(el("div", "info-card", "grid-column:"+c+";grid-row:6;",
+    "<div class='cl' style='color:#FF8C42'><span class='dot dot-mktg'></span>MARKETING</div><div class='ct'>"+m.mktg+"</div>"));
+
+  if (m.ltv !== "-" || m.cpl !== "-") {
+    var uc = "";
+    if (m.ltv !== "-") uc += "<div class='ue-chip'><div class='uv'>"+m.ltv+"</div><div class='ul'>LTV:CAC</div></div>";
+    if (m.cpl !== "-") uc += "<div class='ue-chip'><div class='uv'>"+m.cpl+"</div><div class='ul'>CPL</div></div>";
+    g.appendChild(el("div", "ue-row", "grid-column:"+c+";grid-row:7;", uc));
+  } else {
+    g.appendChild(el("div", "ue-empty", "grid-column:"+c+";grid-row:7;", ""));
+  }
+
+  g.appendChild(el("div", "ms-card", "grid-column:"+c+";grid-row:8;",
+    "<div class='cl'><span class='dot' style='background:#7EB8FF'></span>MILESTONE</div><div class='mt'>"+m.mile+"</div>"));
+}
+</script>
+
+</body>
+</html>
